@@ -3,6 +3,8 @@ package com.atividade2_avaliaPrestador.model;
 
 
 
+
+
 /**
  *
  * @author Reginaldo Gaspar
@@ -12,9 +14,13 @@ package com.atividade2_avaliaPrestador.model;
 public class Prestador {
     
     private int id;
-    private String Nome;
+    
+    private String nome;
+    
     private String servico;
     private String cnpj;
+    
+   
     private String telefone;
 
     public int getId() {
@@ -25,12 +31,13 @@ public class Prestador {
         this.id = id;
     }
 
+    
     public String getNome() {
-        return Nome;
+        return nome;
     }
 
-    public void setNome(String Nome) {
-        this.Nome = Nome;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getServico() {
