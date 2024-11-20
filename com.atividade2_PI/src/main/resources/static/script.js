@@ -13,9 +13,11 @@ $("#Formulario").validate({
         },
         cnpj: {
             required: true,
+            minlength: 18
         },
         telefone: {
             required: true,
+            minlength: 14
         }
     },
     messages: {
@@ -26,10 +28,12 @@ $("#Formulario").validate({
             required: "campo serviço é obrigatório",            
         },
         cnpj: {
-            required: "campo CNPJ é obrigatório (SOMENTE NÚMEROS)",            
+            required: "campo CNPJ é obrigatório (SOMENTE NÚMEROS)", 
+            minlength: "Mínimo 18 digitos xx.xxx.xxx/xxxx-xx",
         },
         telefone: {
-            required: "campo telefone é obrigatório (SOMENTE NÚMEROS)",            
+            required: "campo telefone é obrigatório (SOMENTE NÚMEROS)",   
+            minlength: "Mínimo 14 digitos (00) 00000-0000",
         },
     }   
     
