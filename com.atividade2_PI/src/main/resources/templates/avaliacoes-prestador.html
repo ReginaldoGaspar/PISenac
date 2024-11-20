@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"> 
+    <head>
+        <title>Lista de Avaliações</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+        <!--BootStrap CDN-->
+        <!--BootStrap CDN-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+        <link rel="stylesheet" href="style.css">
+    </head>
+
+    <body>
+        <div id="cabecalho" class="row">
+            <div class="col-sm-12">
+              <h1><strong>Avaliação do Prestador</strong> </h1> 
+            </div>
+        </div>
+       <div
+            <nav> 
+                    <a th:href="@{/cadastro}">Tela inicial</a> 
+                    <a th:href="@{/exibir-prestador}">Exibir prestadores</a> 
+            </nav> 
+        </div>
+        
+        <h1><strong>Prestador:</strong></h1> 
+
+        <p>Id: <span th:text="${pEncontrado.id}"></span></p>
+        <p>Nome: <span th:text="${pEncontrado.nome}"></span></p>
+        <p>Serviço: <span th:text="${pEncontrado.servico}"></span></p>
+        <p>CNPJ: <span th:text="${pEncontrado.cnpj}"></span></p>
+        <p>Telefone: <span th:text="${pEncontrado.telefone}"></span></p>
+
+    </div>
+
+    <hr>
+
+    <div>
+        <table class="table"> 
+                    <thead> 
+                            <tr> 
+                                    <th>ID</th> 
+                                    <th>Avaliação</th> 
+                                    <th>Nota</th> 
+                                </tr> 
+                        </thead> 
+                    <tbody> 
+                            
+
+                <tr th:each="avaliacaoEncontrada : ${listaAvaliacaoEncontrada}">  
+                                    <td th:text="${avaliacaoEncontrada.id}"></td> 
+                                    <td th:text="${avaliacaoEncontrada.avaliacao}"></td>
+                                    <td th:text="${avaliacaoEncontrada.nota}"></td>                         
+                                </tr> 
+
+                        </tbody> 
+                </table> 
+        <br>
+        <a <button type="submit" class="btn btn-success" th:href="@{/avaliacao(id=${pEncontrado.id})}"> Avalie</button> </a>
+       
+    </div>
+</body>
+
+</html>

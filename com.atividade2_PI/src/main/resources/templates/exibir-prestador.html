@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns="w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"> 
+    <head>
+        <title>Lista de Prestadores</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+        <!--BootStrap CDN-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+        <link rel="stylesheet" href="style.css">
+
+    </head>
+   
+    <body>       
+        <div id="cabecalho" class="row">
+            <div class="col-sm-12">
+                <h1><strong>Avaliação de Prestadores</strong> </h1> 
+            </div>
+        </div>
+       <div
+            <nav> 
+                    <a th:href="@{/cadastro}">Tela inicial</a> 
+                    <a th:href="@{/exibir-prestador}">Exibir prestadores</a> 
+            </nav> 
+        </div>
+
+        <h1><strong>Lista de prestadores</strong></h1> 
+           
+        <table class='table'> 
+                    <thead> 
+                            <tr> 
+                                    <th>Id</th> 
+                                    <th>Nome</th> 
+                                    <th>Serviço</th> 
+                                    <th>CNPJ</th> 
+                                    <th>Telefone</th> 
+                    <th>Avaliar</th>                    
+                                      
+                                </tr> 
+                        </thead> 
+                    <tbody> 
+                            
+                <tr th:each = "prestador : ${prestadores}" > 
+                         
+                              <td th:text="${prestador.id}"></td> 
+                                    <td th:text="${prestador.nome}"></td>
+                                    <td th:text="${prestador.servico}"></td>
+                                    <td th:text="${prestador.cnpj}"></td>
+                                    <td th:text="${prestador.telefone}"></td>
+
+                    <td> <a th:href="@{/avaliacao(id=${prestador.id})}"> Avalie </a>
+                        <a th:href="@{/avaliacoes-prestador(id=${prestador.id})}">  | Veja as avaliações </a>
+                        <a th:href="@{/excluirPrestador(id=${prestador.id})}">  | Exclua o prestador </a>
+                        <a th:href="@{/alterarPrestador(id=${prestador.id})}">  | Alterar o prestador </a>
+
+                    </td>
+                         </tr>   
+                         
+                        </tbody> 
+                </table> 
+    </body>
+</html>
