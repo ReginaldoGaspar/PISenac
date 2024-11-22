@@ -1,28 +1,32 @@
 
 package com.atividade2_avaliaPrestador.model;
 
-
-
-
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 /**
  *
  * @author Reginaldo Gaspar
  */
-
-
-public class Prestador {
-    
+@Entity
+@Table (name = "prestador")
+public class PrestadorEntity {
+   
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     
     private String nome;
     
     private String servico;
     private String cnpj;
-    
-   
+       
     private String telefone;
 
+    
     public int getId() {
         return id;
     }

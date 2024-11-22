@@ -1,10 +1,10 @@
-package com.atividade1_UC14.casaCultural;
+package com.atividade2_avaliaPrestador;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CasaCulturalApplicationTests {
+class avaliaPrestadorApplicationTests {
 
 	@Test
 	void contextLoads() {
