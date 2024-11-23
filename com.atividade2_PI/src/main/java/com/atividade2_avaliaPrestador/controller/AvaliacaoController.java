@@ -27,7 +27,7 @@ public class AvaliacaoController {
     @Autowired
     AvaliacaoService avaliacaoService;
 
-    PrestadorEntity prestadorEncontrado;
+    PrestadorEntity prestadorEncontrado = new PrestadorEntity();
     List<AvaliacaoEntity> listaAvaliacaoEncontrada = new ArrayList<>();
 
     
@@ -35,13 +35,8 @@ public class AvaliacaoController {
     public String exibirAvaliacao(Model model, @RequestParam("id") String id) {
         Integer idPrestador = Integer.valueOf(id);
 
-        for (PrestadorEntity p : prestadorService.listarTodosPrestadores()) {
-            if (p.getId() == idPrestador) {
-                prestadorEncontrado = p;
-                break;
-            }
-        }
-
+        prestadorEncontrado = prestadorService.getPrestadorId(idPrestador);
+        
         model.addAttribute("pEncontrado", prestadorEncontrado);
         model.addAttribute("avaliacao", new AvaliacaoEntity());
 
@@ -50,20 +45,17 @@ public class AvaliacaoController {
 
     @PostMapping("/avaliacao")
     public String processarAvaliacao(@ModelAttribute AvaliacaoEntity avaliacao, Model model) {
-
-        avaliacao.setPrestador(prestadorEncontrado);
-        avaliacao.setId(avaliacaoService.listarTodosAvaliacoes().size() + 1);
-
-        avaliacaoService.listarTodosAvaliacoes().add(avaliacao);
         listaAvaliacaoEncontrada.clear();
-
+        avaliacao.setPrestador(prestadorEncontrado);
+        avaliacaoService.criarAvaliacao(avaliacao);
+        
         for (AvaliacaoEntity a : avaliacaoService.listarTodosAvaliacoes()) {
-
-            if (a.getPrestador() == prestadorEncontrado) {
+            if(a.getPrestador().getId() == prestadorEncontrado.getId()){
                 listaAvaliacaoEncontrada.add(a);
             }
+            
         }
-
+        
         model.addAttribute("pEncontrado", prestadorEncontrado);
         model.addAttribute("listaAvaliacaoEncontrada", listaAvaliacaoEncontrada);
 

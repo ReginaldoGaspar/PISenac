@@ -22,65 +22,50 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/")
 public class PrestadorController {
-    
+
     @Autowired
     PrestadorService prestadorService = new PrestadorService();
 
     @Autowired
     AvaliacaoService avaliacaoService = new AvaliacaoService();
-    
-    PrestadorEntity prestadorEncontrado = new PrestadorEntity();
-    
+
     List<AvaliacaoEntity> listaAvaliacaoEncontrada = new ArrayList<>();
-    
+
     @GetMapping("/cadastro")
     public String exibirFormulario(Model model) {
         model.addAttribute("prestador", new PrestadorEntity());
         return "cadastro";
     }
-    
+
     @PostMapping("/cadastro")
     public String processarFormulario(@ModelAttribute PrestadorEntity prestador, Model model) {
 
         if (prestador.getId() > 0) {
-            for (PrestadorEntity p : prestadorService.listarTodosPrestadores()) {
-                if (p.getId() == prestador.getId()) {
-                    p.setNome(prestador.getNome());
-                    p.setServico(prestador.getServico());
-                    p.setCnpj(prestador.getCnpj());
-                    p.setTelefone(prestador.getTelefone());
-                }
-            }
+            prestadorService.atualizarPrestador(prestador, prestador.getId());
         } else {
-            prestador.setId(prestadorService.listarTodosPrestadores().size() + 1);
-            prestadorService.listarTodosPrestadores().add(prestador);
+            prestadorService.criarPrestador(prestador);
         }
         model.addAttribute("prestadores", prestadorService.listarTodosPrestadores());
         return "exibir-prestador";
     }
-    
-     @GetMapping("/exibir-prestador")
+
+    @GetMapping("/exibir-prestador")
     public String exibir(@ModelAttribute PrestadorEntity prestador, Model model) {
         model.addAttribute("prestadores", prestadorService.listarTodosPrestadores());
         return "exibir-prestador";
     }
-    
-     @GetMapping("/avaliacoes-prestador")
+
+    @GetMapping("/avaliacoes-prestador")
     public String exibirAvaliacoes(Model model, @RequestParam("id") String id) {
-        Integer idPrestador = Integer.valueOf(id);
-        for (PrestadorEntity p : prestadorService.listarTodosPrestadores()) {
-            if (p.getId() == idPrestador) {
-                prestadorEncontrado = p;
-                break;
-            }
-        }
         listaAvaliacaoEncontrada.clear();
-        for (AvaliacaoEntity a : avaliacaoService.listarTodosAvaliacoes()) {
-            if (a.getPrestador() == prestadorEncontrado) {
+        Integer idPrestador = Integer.valueOf(id);
+        for(AvaliacaoEntity a : avaliacaoService.listarTodosAvaliacoes()){
+            if(a.getPrestador().getId() == idPrestador){
                 listaAvaliacaoEncontrada.add(a);
             }
         }
-        model.addAttribute("pEncontrado", prestadorEncontrado);
+        
+        model.addAttribute("pEncontrado", prestadorService.getPrestadorId(idPrestador));
         model.addAttribute("listaAvaliacaoEncontrada", listaAvaliacaoEncontrada);
         return "avaliacoes-prestador";
     }
@@ -88,30 +73,19 @@ public class PrestadorController {
     @GetMapping("/excluirPrestador")
     public String excluirPrestador(Model model, @RequestParam("id") String id) {
         Integer idPrestador = Integer.valueOf(id);
-        for (PrestadorEntity p : prestadorService.listarTodosPrestadores()) {
-            if (p.getId() == idPrestador) {
-                prestadorEncontrado = p;
-                prestadorService.deletarPrestador(idPrestador);                
-                break;
-            }
-        }        
-       
-        model.addAttribute("pEncontrado", prestadorEncontrado);
-        model.addAttribute("listaAnvaliacaoEncontrada", listaAvaliacaoEncontrada);
+        avaliacaoService.deletarAvaliacao(idPrestador);
+        prestadorService.deletarPrestador(idPrestador);        
+        
+        model.addAttribute("pEncontrado", prestadorService.getPrestadorId(idPrestador));
+        model.addAttribute("listaAnvaliacaoEncontrada", avaliacaoService.listarTodosAvaliacoes());
         return "redirect:/exibir-prestador";
     }
 
     @GetMapping("/alterarPrestador")
     public String alterarPrestador(Model model, @RequestParam("id") String id) {
         Integer idPrestador = Integer.valueOf(id);
-        for (PrestadorEntity p : prestadorService.listarTodosPrestadores()) {
-            if (p.getId() == idPrestador) {
-                prestadorEncontrado = p;
-                break;
-            }
-        }
-
-        model.addAttribute("prestador", prestadorEncontrado);
+        
+        model.addAttribute("prestador", prestadorService.getPrestadorId(idPrestador));
 
         return "cadastro";
     }
