@@ -30,13 +30,12 @@ public class AvaliacaoController {
     PrestadorEntity prestadorEncontrado = new PrestadorEntity();
     List<AvaliacaoEntity> listaAvaliacaoEncontrada = new ArrayList<>();
 
-    
     @GetMapping("/avaliacao")
     public String exibirAvaliacao(Model model, @RequestParam("id") String id) {
         Integer idPrestador = Integer.valueOf(id);
 
         prestadorEncontrado = prestadorService.getPrestadorId(idPrestador);
-        
+
         model.addAttribute("pEncontrado", prestadorEncontrado);
         model.addAttribute("avaliacao", new AvaliacaoEntity());
 
@@ -48,17 +47,46 @@ public class AvaliacaoController {
         listaAvaliacaoEncontrada.clear();
         avaliacao.setPrestador(prestadorEncontrado);
         avaliacaoService.criarAvaliacao(avaliacao);
-        
+
         for (AvaliacaoEntity a : avaliacaoService.listarTodosAvaliacoes()) {
-            if(a.getPrestador().getId() == prestadorEncontrado.getId()){
+            if (a.getPrestador().getId() == prestadorEncontrado.getId()) {
                 listaAvaliacaoEncontrada.add(a);
             }
-            
         }
-        
+
         model.addAttribute("pEncontrado", prestadorEncontrado);
         model.addAttribute("listaAvaliacaoEncontrada", listaAvaliacaoEncontrada);
 
         return "avaliacoes-prestador";
+    }
+
+    @GetMapping("/excluirAvaliacao")
+    public String excluirAvaliacao(@RequestParam String id, Model model){
+        listaAvaliacaoEncontrada.clear();
+        Integer idAvaliacao = Integer.valueOf(id);
+        
+        AvaliacaoEntity avaliacaoEncontrada = avaliacaoService.getAvaliacaoId(idAvaliacao);
+        prestadorEncontrado = avaliacaoEncontrada.getPrestador();
+        
+        avaliacaoService.deletarAvaliacao(idAvaliacao);
+        
+        for (AvaliacaoEntity a : avaliacaoService.listarTodosAvaliacoes()) {
+            if (a.getPrestador().getId() == prestadorEncontrado.getId()) {
+                listaAvaliacaoEncontrada.add(a);
+            }
+        }
+        
+        model.addAttribute("pEncontrado", prestadorEncontrado);
+        model.addAttribute("listaAvaliacaoEncontrada", listaAvaliacaoEncontrada);
+        return "avaliacoes-prestador";
+     }
+
+    @GetMapping("/alterarAvaliacao")
+    public String alterarValiacao(Model model, @RequestParam("id") String id) {
+        Integer idAvaliacao = Integer.valueOf(id);
+
+        model.addAttribute("avaliacao", avaliacaoService.getAvaliacaoId(idAvaliacao));
+
+        return "avaliacao";
     }
 }

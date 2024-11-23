@@ -53,6 +53,7 @@ public class PrestadorService {
 
     public void deletarPrestador(Integer prestadorId) {
         PrestadorEntity prestador = getPrestadorId(prestadorId);
+        System.out.println("prestador id " + prestador.getId());
         prestadorRepository.deleteById(prestador.getId());
     }
 

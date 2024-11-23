@@ -44,6 +44,7 @@
                                     <th>ID</th> 
                                     <th>Avaliação</th> 
                                     <th>Nota</th> 
+                    <th>Opções</th>
                                 </tr> 
                         </thead> 
                     <tbody> 
@@ -52,12 +53,17 @@
                 <tr th:each="avaliacaoEncontrada : ${listaAvaliacaoEncontrada}">  
                                     <td th:text="${avaliacaoEncontrada.id}"></td> 
                                     <td th:text="${avaliacaoEncontrada.avaliacao}"></td>
-                                    <td th:text="${avaliacaoEncontrada.nota}"></td>                         
+                                    <td th:text="${avaliacaoEncontrada.nota}"></td>  
+                    
+                     <td><a th:href="@{/excluirAvaliacao(id=${avaliacaoEncontrada.id})}">  Excluir </a>
+                        <a th:href="@{/alterarAvaliacao(id=${avaliacaoEncontrada.id})}">  | Alterar </a>
+                    </td>               
                                 </tr> 
 
                         </tbody> 
                 </table> 
         <br>
+        
         <a <button type="submit" class="btn btn-success" th:href="@{/avaliacao(id=${pEncontrado.id})}"> Avalie</button> </a>
        
     </div>

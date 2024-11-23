@@ -73,7 +73,7 @@ public class PrestadorController {
     @GetMapping("/excluirPrestador")
     public String excluirPrestador(Model model, @RequestParam("id") String id) {
         Integer idPrestador = Integer.valueOf(id);
-        avaliacaoService.deletarAvaliacao(idPrestador);
+        avaliacaoService.deletarTodasAvaliacoes(idPrestador);
         prestadorService.deletarPrestador(idPrestador);        
         
         model.addAttribute("pEncontrado", prestadorService.getPrestadorId(idPrestador));

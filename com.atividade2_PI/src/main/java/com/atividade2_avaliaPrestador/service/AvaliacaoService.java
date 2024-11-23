@@ -37,7 +37,12 @@ public class AvaliacaoService {
         return avaliacaoRepository.findAll();
     }
 
-    public void deletarAvaliacao(int avaliacaoId) {
+    public void deletarTodasAvaliacoes(int avaliacaoId) {
         avaliacaoRepository.deleteAll(avaliacaoRepository.findByPrestador_id(avaliacaoId));       
+    }
+
+    public void deletarAvaliacao(Integer idAvaliacao) {
+        AvaliacaoEntity avaliacao = getAvaliacaoId(idAvaliacao);
+        avaliacaoRepository.deleteById(avaliacao.getId());
     }
 }
