@@ -50,6 +50,7 @@ public class PrestadorController {
             prestadorService.criarPrestador(prestador);
         }
         model.addAttribute("prestadores", prestadorService.listarTodosPrestadores());
+        model.addAttribute("avaliacoes", avaliacaoService.listarTodosAvaliacoes());
         return "exibir-prestador";
     }
 

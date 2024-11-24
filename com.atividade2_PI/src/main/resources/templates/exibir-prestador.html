@@ -11,14 +11,14 @@
         <link rel="stylesheet" href="style.css">
 
     </head>
-   
+
     <body>       
         <div id="cabecalho" class="row">
             <div class="col-sm-12">
                 <h1><strong>Avaliação de Prestadores</strong> </h1> 
             </div>
         </div>
-       <div
+        <div
             <nav> 
                     <a th:href="@{/cadastro}">Tela inicial</a> 
                     <a th:href="@{/exibir-prestador}">Exibir prestadores</a> 
@@ -35,25 +35,22 @@
                                     <th>Serviço</th> 
                                     <th>CNPJ</th> 
                                     <th>Telefone</th> 
-                    <th>Avaliar</th>                    
-                                      
+                                    <th>Opções</th>                                   
                                 </tr> 
                         </thead> 
                     <tbody> 
                             
-                <tr th:each = "prestador : ${prestadores}" > 
-                         
+                <tr th:each = "prestador : ${prestadores}"> 
+                        
                               <td th:text="${prestador.id}"></td> 
                                     <td th:text="${prestador.nome}"></td>
                                     <td th:text="${prestador.servico}"></td>
                                     <td th:text="${prestador.cnpj}"></td>
-                                    <td th:text="${prestador.telefone}"></td>
-
-                    <td> <a th:href="@{/avaliacao(id=${prestador.id})}"> Avaliar </a>
+                                    <td th:text="${prestador.telefone}"></td> 
+                    <td><a th:href="@{/avaliacao(id=${prestador.id})}"> Avaliar </a>                                              
                         <a th:href="@{/avaliacoes-prestador(id=${prestador.id})}">  | Veja as avaliações </a>
                         <a th:href="@{/excluirPrestador(id=${prestador.id})}">  | Excluir </a>
                         <a th:href="@{/alterarPrestador(id=${prestador.id})}">  | Alterar </a>
-
                     </td>
                          </tr>   
                          
