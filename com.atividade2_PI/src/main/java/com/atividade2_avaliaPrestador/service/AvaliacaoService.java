@@ -1,6 +1,7 @@
 package com.atividade2_avaliaPrestador.service;
 
 import com.atividade2_avaliaPrestador.model.AvaliacaoEntity;
+import com.atividade2_avaliaPrestador.model.PrestadorEntity;
 import com.atividade2_avaliaPrestador.repository.AvaliacaoRepository;
 
 import java.util.List;
@@ -29,7 +30,7 @@ public class AvaliacaoService {
         return filmeRepository.findById(filmeId).orElseThrow(() -> new ResourceNotFoundException("Filme não encontrado " + filmeId));
     }*/
     //método com retorno padrão
-    public AvaliacaoEntity getAvaliacaoId(Integer avaliacaoId) {
+    public AvaliacaoEntity getAvaliacaoId(int avaliacaoId) {
         return avaliacaoRepository.findById(avaliacaoId).orElse(null);
     }
 
@@ -38,11 +39,24 @@ public class AvaliacaoService {
     }
 
     public void deletarTodasAvaliacoes(int avaliacaoId) {
-        avaliacaoRepository.deleteAll(avaliacaoRepository.findByPrestador_id(avaliacaoId));       
+        avaliacaoRepository.deleteAll(avaliacaoRepository.findByPrestador_id(avaliacaoId));
     }
 
     public void deletarAvaliacao(Integer idAvaliacao) {
         AvaliacaoEntity avaliacao = getAvaliacaoId(idAvaliacao);
         avaliacaoRepository.deleteById(avaliacao.getId());
     }
+
+    public AvaliacaoEntity atualizarAvaliacao(AvaliacaoEntity avaliacaoRequest, int id) {
+        AvaliacaoEntity avaliacao= getAvaliacaoId(id);
+        avaliacao.setAvaliacao(avaliacaoRequest.getAvaliacao());
+        avaliacao.setNota(avaliacaoRequest.getNota());
+
+        avaliacaoRepository.save(avaliacao);
+        return avaliacao;
+    }
+    
+    
+    
+    
 }

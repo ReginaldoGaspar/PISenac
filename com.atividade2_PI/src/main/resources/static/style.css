@@ -1,12 +1,10 @@
-        body {
-            background-color: azure;
-        }
-        #cabecalho {
-            background-color: rgb(90, 144, 206);
-            color: black;
-            font-family: Verdana, Geneva, Tahoma, sans-serif;
-            font-size: large;
-            text-align: center;
-
-        }
-      
+body {
+    background-color: azure;
+}
+#cabecalho {
+    background-color: rgb(90, 144, 206);
+    color: black;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: large;
+    text-align: center;
+}

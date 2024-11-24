@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import org.hibernate.validator.constraints.br.CNPJ;
 
 /**
  *
@@ -22,6 +23,8 @@ public class PrestadorEntity {
     private String nome;
     
     private String servico;
+    
+    @CNPJ(message = "CNPJ Inválido")
     private String cnpj;
        
     private String telefone;

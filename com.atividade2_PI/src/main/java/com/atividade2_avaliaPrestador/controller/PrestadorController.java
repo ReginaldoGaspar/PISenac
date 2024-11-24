@@ -4,11 +4,13 @@ import com.atividade2_avaliaPrestador.model.AvaliacaoEntity;
 import com.atividade2_avaliaPrestador.model.PrestadorEntity;
 import com.atividade2_avaliaPrestador.service.AvaliacaoService;
 import com.atividade2_avaliaPrestador.service.PrestadorService;
+import jakarta.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,8 +40,10 @@ public class PrestadorController {
     }
 
     @PostMapping("/cadastro")
-    public String processarFormulario(@ModelAttribute PrestadorEntity prestador, Model model) {
-
+    public String processarFormulario(@Valid @ModelAttribute("prestador") PrestadorEntity prestador, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "cadastro";            
+        }
         if (prestador.getId() > 0) {
             prestadorService.atualizarPrestador(prestador, prestador.getId());
         } else {
@@ -60,7 +64,7 @@ public class PrestadorController {
         listaAvaliacaoEncontrada.clear();
         Integer idPrestador = Integer.valueOf(id);
         for(AvaliacaoEntity a : avaliacaoService.listarTodosAvaliacoes()){
-            if(a.getPrestador().getId() == idPrestador){
+            if(a.getPrestador() == prestadorService.getPrestadorId(idPrestador)){
                 listaAvaliacaoEncontrada.add(a);
             }
         }
